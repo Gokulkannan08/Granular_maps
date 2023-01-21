@@ -1,0 +1,15 @@
+@use "../../theme/variables.module.scss" as theme;
+@use "sass:map";
+
+.paper {
+    display: flex;
+    align-items: center;
+    background-color: map.get(theme.$palette, "background", "paper");
+    border-radius: map.get(theme.$spacing, "sm");
+    padding: map.get(theme.$spacing, "sm");
+    @each $name, $value in theme.$shawdow {
+        &_elevation_#{$name} {
+            box-shadow: $value;
+        }
+    }
+}

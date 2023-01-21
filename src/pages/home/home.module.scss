@@ -1,0 +1,17 @@
+@use "../../theme/variables.module.scss" as theme;
+@use "sass:map";
+
+.homebody {
+    flex: 1;
+    display: flex;
+    position: relative;
+}
+
+.searchbox {
+    position: absolute;
+    top: 2.5rem;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -1.5rem);
+    z-index: 500;
+}

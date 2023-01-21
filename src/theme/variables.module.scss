@@ -1,0 +1,74 @@
+$spacing: (
+    "sm": 8px,
+    "md": 16px,
+    "lg": 24px,
+);
+
+$fontFamily:(
+    "bold":Granular_Bold,
+    "regular":Granular_Regular,
+    "medium":Granular_Medium,
+    "light":Granular_light,
+);
+
+$palette:(
+    "primary": (
+               "main": rgba(59, 130, 246, 1),
+                "light":rgba(59, 130, 246, 0.5),
+                "contrastText":rgba(255, 255, 255, 1),
+                "InvertText":rgba(0, 0, 0, 1),
+    ),
+    "secondary":(
+                "main": rgba(0, 112, 216,1),
+                "light":rgba(0, 112, 216,0.5),
+                "contrastText":rgba(255, 255, 255, 1),
+                "InvertText":rgba(0, 0, 0, 1),
+    ),
+    "success":(
+             "contrastText": rgba(0, 0, 0, 0.87),
+              "light": rgb(107, 232, 157),
+              "main": rgb(29, 180, 90)
+    ),
+    "error":(
+                "contrastText": rgba(255, 255, 255, 1),
+                 "light": rgb(255, 153, 162),
+                 "main": rgb(235, 0, 20)
+    ),
+    "text":(
+                "light": rgba(255, 255, 255, 0.5),
+                "main": rgb(18, 25, 38)
+    ),
+    "disabled":(
+               "main" :rgba(255, 255, 255, 0.5)
+    ),
+    "background":(
+                "default": #e1f0fe,
+                "paper": #ffffff,
+                "black": #1D1D1D,
+                "white": #fff
+    )
+
+);
+
+$shawdow:(
+  "0": none,
+  "1": (0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)),
+  "2": (0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)),
+  "3": (0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)),
+  "4": (0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)),
+  "5": (0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12)),
+  "6": (0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12)),
+  "7": (0px 4px 5px -2px rgba(0,0,0,0.2),0px 7px 10px 1px rgba(0,0,0,0.14),0px 2px 16px 1px rgba(0,0,0,0.12))
+);
+
+$breakpoints: (
+        "lg": 1200px ,"md": 900px ,"sm": 600px ,"xl": 1536px ,"xs": 0px
+);
+
+@mixin breakpoint($name) {
+    @media screen and (min-width: map-get($breakpoints, $name )) {
+        @content;
+    }
+}
+
+
