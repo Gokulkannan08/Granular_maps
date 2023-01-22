@@ -1,15 +1,17 @@
-import { Button, Card, Typography } from "../../components"
+import { Button, Card, Typography } from "../../components";
+
 interface AutoComProps {
     loading: boolean,
     data: object[],
     onUpdateMap?: any,
     title?: string,
+    icon?: JSX.Element,
     closeBtnClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 
 
-const AutoComplete: React.FC<AutoComProps> = ({ loading, data, onUpdateMap, title, closeBtnClick }) => {
+const AutoComplete: React.FC<AutoComProps> = ({ loading, data, onUpdateMap, icon, title, closeBtnClick }) => {
 
     const onClick = (item: any) => {
         onUpdateMap(item);
@@ -23,9 +25,9 @@ const AutoComplete: React.FC<AutoComProps> = ({ loading, data, onUpdateMap, titl
             Loading....
         </Typography>
     }
-    return <>
-        <div style={{ maxHeight: "350px", overflowY: "auto", flex: 1 }} >
-            {title && <div style={{ padding: "16px", display: "flex", justifyContent: 'space-between', alignItems: "center" }} >
+    return (
+        <>
+            {title && <div style={{ padding: "8px 16px", display: "flex", justifyContent: 'space-between', alignItems: "center" }} >
                 <Typography variant="h5" color="text" >
                     {title}
                 </Typography>
@@ -33,25 +35,28 @@ const AutoComplete: React.FC<AutoComProps> = ({ loading, data, onUpdateMap, titl
                     Close
                 </Button>
             </div>}
-            {
-                data?.length > 0 ?
-                    data?.map((item: any) =>
-                        <Card
-                            key={item?.place_id}
-                            variant="listitem"
-                            title={item?.display_name}
-                            divider
-                            onClick={() => onClick(item)} />
-                    ) :
+            <div style={{ maxHeight: "350px", overflowY: "auto", flex: 1 }} >
 
-                    <Typography style={{ padding: "16px" }} variant="body1" color="text" >
-                        No matching results
-                    </Typography>
+                {
+                    data?.length > 0 ?
+                        data?.map((item: any) =>
+                            <Card
+                                key={item?.place_id}
+                                variant="listitem"
+                                title={item?.display_name}
+                                divider
+                                icon={icon}
+                                onClick={() => onClick(item)} />
+                        ) :
 
-            }
-        </div>
+                        <Typography style={{ padding: "16px" }} variant="body1" color="text" >
+                            No matching results
+                        </Typography>
 
-    </>
+                }
+            </div>
+        </>
+    )
 }
 
 export default AutoComplete;

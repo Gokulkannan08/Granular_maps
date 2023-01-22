@@ -1,5 +1,5 @@
 import axios, { CancelTokenSource } from "axios";
-import styles from "searchbar.module.scss";
+import styles from "./searchbar.module.scss";
 import { useState } from "react";
 import { AxiosCall } from "../../api";
 import { SearchTextField, Typography } from "../../components"
@@ -7,7 +7,11 @@ import Button from "../../components/button";
 import Grid from "../../components/grid"
 import Paper from "../../components/paper"
 import AutoComplete from "./autoComplete";
-import BiTime from 'react-icons/bi';
+import { BiTime, BiSearch } from 'react-icons/bi';
+
+import { MdLocationPin } from 'react-icons/md';
+import useMediaQuery from "../../customHooks/mediaQueryHook";
+
 const SearchBarComponent = (props: { updateMap: any; recentSearch: object[] }) => {
   const { updateMap, recentSearch } = props;
   const [search, setValue] = useState<string>("");
@@ -16,6 +20,7 @@ const SearchBarComponent = (props: { updateMap: any; recentSearch: object[] }) =
   const [buttonloading, setButtonloading] = useState<boolean>(false);
   const [showRecent, setShowRecent] = useState<boolean>(false);
   const [showSuggest, setShowSuggest] = useState<boolean>(false);
+  const forPhone = useMediaQuery('(min-width: 600px)')
   let token: CancelTokenSource;
 
   function isAdministrativeType(item: any, index: number, array: object[]) {
@@ -44,7 +49,7 @@ const SearchBarComponent = (props: { updateMap: any; recentSearch: object[] }) =
   }
 
 
-  const onSearchButtonClicked = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const onSearchButtonClicked = (event: React.MouseEvent<HTMLButtonElement> | React.MouseEvent<HTMLDivElement>) => {
     setButtonloading(true);
     setShowRecent(false)
     setShowSuggest(false)
@@ -57,9 +62,11 @@ const SearchBarComponent = (props: { updateMap: any; recentSearch: object[] }) =
     let url = `${process.env.REACT_APP_NOMINATIMAPI_SEARCH_URL}?q=${value}&format=json&extratags=1&polygon_geojson=1&limit=1`;
     token = axios.CancelToken.source();
     AxiosCall(url, "get", token).then((results) => {
-      // console.log("results", results)
-      setButtonloading(false)
-      onUpdateMap(results[0])
+      if (results.length > 0) {
+        setButtonloading(false)
+        onUpdateMap(results[0])
+      }
+
     }).catch((err) => {
       console.log(err)
     });
@@ -79,7 +86,7 @@ const SearchBarComponent = (props: { updateMap: any; recentSearch: object[] }) =
 
   }
 
-  const recentBtnClicked = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const recentBtnClicked = (event: React.MouseEvent<HTMLDivElement>) => {
     setShowRecent(!showRecent)
   }
 
@@ -99,32 +106,49 @@ const SearchBarComponent = (props: { updateMap: any; recentSearch: object[] }) =
           <Grid item md={8} lg={6} xs={11} >
             <Paper elavation={"1"} style={{ flex: "0 0 auto" }} >
               <>
-                <Button variant="text" onClick={recentBtnClicked}  >
-                  {"Recent"}
-                </Button>
-
-
-                <div style={{ flex: "1 1 auto" }}>
-                  <SearchTextField type="text" value={search} onChange={handleChange} placeholder="Search your location" fullWidth />
+                <div className={styles.icon} onClick={recentBtnClicked}>
+                  <BiTime />
                 </div>
-
+                <div style={{ flex: "1 1 auto" }}>
+                  <SearchTextField
+                    type="text"
+                    value={search}
+                    onChange={handleChange}
+                    placeholder="Search your location"
+                    fullWidth />
+                </div>
                 <div style={{ flex: "0 0 auto" }}>
                   {
-                    buttonloading ?
-                      <Button variant="text"  >
-                        {"Fetching...."}
-                      </Button>
-                      :
-                      <Button variant="text" onClick={onSearchButtonClicked} disabled={search.trim().length > 0 ? false : true} >
-                        {"Search"}
-                      </Button>
+                    !forPhone ? <>
+                      {
+                        (buttonloading || search.trim().length === 0) ?
+                          <div className={styles.diasbled} onClick={recentBtnClicked}>
+                            <BiSearch />
+                          </div> :
+                          <div className={styles.icon} onClick={onSearchButtonClicked}>
+                            <BiSearch />
+                          </div>
+                      }
+                    </> : <>
+                      {
+                        buttonloading ?
+                          <Button variant="text"  >
+                            {"Fetching...."}
+                          </Button>
+                          :
+                          <Button
+                            variant="text"
+                            onClick={onSearchButtonClicked}
+                            disabled={search.trim().length > 0 ? false : true} >
+                            {"Search"}
+                          </Button>
+                      }
+                    </>
                   }
 
                 </div>
               </>
-
             </Paper>
-
           </Grid>
         </Grid>
       </Grid>
@@ -132,9 +156,15 @@ const SearchBarComponent = (props: { updateMap: any; recentSearch: object[] }) =
         showSuggest &&
         <Grid item md={12} lg={12} xs={12} justifyContent="center" alignItems="center" >
           <Grid container justifyContent="center" alignItems="center" >
-            <Grid item md={8} lg={6} xs={8}>
+            <Grid item md={8} lg={6} xs={11}>
               <Paper style={{ marginTop: "8px" }} direction="column" >
-                <AutoComplete loading={loading} data={suggestion} onUpdateMap={onUpdateMap} title={"Suggestions"} closeBtnClick={closeSuggestionModal} />
+                <AutoComplete
+                  loading={loading}
+                  data={suggestion}
+                  onUpdateMap={onUpdateMap}
+                  title={"Suggestions"}
+                  closeBtnClick={closeSuggestionModal}
+                  icon={<MdLocationPin />} />
               </Paper>
             </Grid>
           </Grid>
@@ -145,10 +175,15 @@ const SearchBarComponent = (props: { updateMap: any; recentSearch: object[] }) =
         showRecent &&
         <Grid item md={12} lg={12} xs={12} justifyContent="center" alignItems="center" >
           <Grid container justifyContent="center" alignItems="center" >
-            <Grid item md={8} lg={6} xs={8}>
+            <Grid item md={8} lg={6} xs={11}>
               <Paper style={{ marginTop: "8px" }} direction="column">
-
-                <AutoComplete loading={false} data={recentSearch} onUpdateMap={onUpdateMap} title={"Recent Search"} closeBtnClick={closeBtnClick} />
+                <AutoComplete
+                  loading={false}
+                  data={recentSearch}
+                  onUpdateMap={onUpdateMap}
+                  title={"Recent Search"}
+                  closeBtnClick={closeBtnClick}
+                  icon={<BiTime />} />
               </Paper>
             </Grid>
           </Grid>

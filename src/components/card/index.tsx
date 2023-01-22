@@ -8,10 +8,11 @@ interface CardProps {
     onClick?: (event: React.MouseEvent<HTMLDivElement>) => void
     variant?: string,
     divider?: boolean,
+    icon?: JSX.Element,
 }
 
 const Card: FC<CardProps> = (props) => {
-    const { title, variant = "card", onClick, divider } = props;
+    const { title, variant = "card", onClick, divider, icon } = props;
 
     const className = cn([{
         [styles[`card_${variant}`]]: variant,
@@ -19,8 +20,17 @@ const Card: FC<CardProps> = (props) => {
     return <>
         <div className={className} onClick={onClick} >
 
+            {icon && <div className={styles.icon}>
+                {icon}
+            </div>}
 
-            <Typography variant="body1" color="text" >
+            <Typography variant="body1" color="text"
+                style={{
+                    display: "-webkit-box",
+                    WebkitLineClamp: "1",
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
+                }} >
                 {title}
             </Typography>
         </div>

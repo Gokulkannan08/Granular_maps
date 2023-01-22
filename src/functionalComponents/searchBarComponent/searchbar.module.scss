@@ -1,9 +1,12 @@
+@use "../../theme/variables.module.scss" as theme;
+@use "sass:map";
+
 .icon {
-    flex: 0 0 auto;
-    font-size: 1.5rem;
-    padding: 8px;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    @include theme.iconButton;
+}
+
+.diasbled {
+    @include theme.iconButton;
+    color: map.get(theme.$palette, "disabled", "main") !important;
+    background: transparent;
 }
