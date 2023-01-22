@@ -33,18 +33,12 @@ const HomeBody = () => {
         else {
             setMapData(defaultMapData)
         }
-
-
         return () => {
             if (token !== undefined) {
                 token.cancel()
             }
         }
-
     }, [])
-
-
-
 
     const updateMap = (searchresult: object) => {
         setMapData(searchresult);

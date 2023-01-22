@@ -1,3 +1,6 @@
+@use "../../theme/variables.module.scss" as theme;
+@use "sass:map";
+
 .card {
     &_listitem {
         display: flex;
@@ -10,6 +13,9 @@
         width: 100%;
         box-sizing: border-box;
         text-align: left;
+        &:hover {
+            background-color: map.get(theme.$palette, "primary", "light") !important;
+        }
     }
 }
 
