@@ -1,23 +1,10 @@
-$spacing: (
-    "sm": 8px,
-    "md": 16px,
-    "lg": 24px,
-);
+@use "../../theme/variables.module.scss" as theme;
+@use "sass:map";
 
-$breakpoints: (
-    "sm": 600px,
-    "md": 960px,
-    "lg": 1280px,
-);
-
-$justifyContent: (flex-start, flex-end, center, space-between);
-$alignItems: (flex-start, flex-end, center);
-
-@mixin breakpoint($name) {
-    @media screen and (min-width: map-get($breakpoints, $name )) {
-        @content;
-    }
-}
+$spacing: theme.$spacing;
+$breakpoints: theme.$breakpoints;
+$justifyContent: theme.$justifyContent;
+$alignItems: theme.$alignItems;
 
 .Grid {
     &_container {
@@ -33,41 +20,31 @@ $alignItems: (flex-start, flex-end, center);
 
     @for $i from 1 to 13 {
         &_xs_#{$i} {
-            flex-basis: $i/12 * 100%;
+            flex-basis: calc($i/12) * 100%;
         }
     }
 
-    @include breakpoint("sm") {
+    @include theme.breakpoint("sm") {
         @for $i from 1 to 13 {
             &_sm_#{$i} {
-                flex-basis: $i/12 * 100%;
+                flex-basis: calc($i/12) * 100%;
             }
         }
     }
 
-    @include breakpoint("md") {
+    @include theme.breakpoint("md") {
         @for $i from 1 to 13 {
             &_md_#{$i} {
-                flex-basis: $i/12 * 100%;
+                flex-basis: calc($i/12) * 100%;
             }
         }
     }
 
-    @include breakpoint("lg") {
+    @include theme.breakpoint("lg") {
         @for $i from 1 to 13 {
             &_lg_#{$i} {
-                flex-basis: $i/12 * 100%;
+                flex-basis: calc($i/12) * 100%;
             }
-        }
-    }
-
-    @each $name, $value in $spacing {
-        &_spacing_#{$name} {
-            margin: -$value;
-        }
-
-        &_spacing_#{$name} > &_item {
-            padding: $value;
         }
     }
 

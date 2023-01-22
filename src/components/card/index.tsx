@@ -2,31 +2,32 @@ import { FC } from "react";
 import Typography from "../typography";
 import cn from 'classnames';
 import styles from './card.module.scss';
-import { string } from "prop-types";
+import { bool, string } from "prop-types";
 interface CardProps {
     title: string,
-    icon?: string,
+    onClick?: (event: React.MouseEvent<HTMLDivElement>) => void
     variant?: string,
+    divider?: boolean,
 }
 
 const Card: FC<CardProps> = (props) => {
-    const { title, icon, variant = "card" } = props;
+    const { title, variant = "card", onClick, divider } = props;
 
     const className = cn([{
-        [styles[`Card_${variant}`]]: variant,
+        [styles[`card_${variant}`]]: variant,
     }, styles.listItem,])
-    return <div className={className} >
-
-        {icon && <div className={styles.avater}>
-            <img src="" alt="icon" />
-        </div>}
-        <Typography variant="body1" color="text" >
-            {title}
-        </Typography>
+    return <>
+        <div className={className} onClick={onClick} >
 
 
-
-    </div>
+            <Typography variant="body1" color="text" >
+                {title}
+            </Typography>
+        </div>
+        {
+            divider ? <hr className={styles.divider} /> : null
+        }
+    </>
 }
 
 export default Card;
@@ -34,6 +35,6 @@ export default Card;
 
 Card.propTypes = {
     title: string.isRequired,
-    icon: string,
     variant: string,
+    divider: bool,
 }

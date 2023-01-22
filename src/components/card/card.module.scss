@@ -1,5 +1,5 @@
 .card {
-    &_list {
+    &_listitem {
         display: flex;
         -webkit-box-pack: start;
         justify-content: flex-start;
@@ -53,4 +53,15 @@
     line-height: 1;
     border-radius: 50%;
     overflow: hidden;
+}
+
+.divider {
+    margin: 0px;
+    height: 2px;
+    border-width: 0px 0px thin;
+    border-style: solid;
+    border-color: rgb(194 194 194 / 50%);
+    &:last-child {
+        border-color: rgba(255, 255, 255, 0);
+    }
 }

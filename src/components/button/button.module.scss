@@ -46,11 +46,14 @@
     @each $name, $value in theme.$palette {
         &_outlined_#{$name} {
             color: map.get(theme.$palette, $name, "main") !important;
-            border: 1px solid map.get(theme.$palette, $name, "main");
+            border-width: 1px;
+            border-style: solid;
+            border-color: map.get(theme.$palette, $name, "main");
             background-color: transparent;
             &:hover {
-                border: map.get(theme.$palette, $name, "light") !important;
-                color: map.get(theme.$palette, $name, "light") !important;
+                border-color: map.get(theme.$palette, $name, "dark") !important;
+                color: map.get(theme.$palette, $name, "dark") !important;
+                background-color: map.get(theme.$palette, $name, "light") !important;
             }
         }
     }
@@ -60,8 +63,13 @@
             color: map.get(theme.$palette, $name, "main") !important;
             background-color: transparent;
             &:hover {
-                color: map.get(theme.$palette, $name, "light") !important;
+                color: map.get(theme.$palette, $name, "dark") !important;
+                background-color: map.get(theme.$palette, $name, "light") !important;
             }
         }
+    }
+
+    &_fullwidth {
+        width: 100%;
     }
 }

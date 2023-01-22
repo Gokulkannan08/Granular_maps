@@ -1,18 +1,75 @@
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { Box, } from "../../components";
 import { MapComponent, SearchBarComponent } from "../../functionalComponents";
 
 import styles from './home.module.scss';
+import { AxiosCall } from "../../api";
+import axios, { CancelTokenSource } from "axios";
+import { isObjectEmpty } from "../../utlis/helperfunction";
 const HomeBody = () => {
-    const [mapData, setMapData] = useState<object>(defaultMapData);
+    const [mapData, setMapData] = useState<object>({});
+    const [recentSearch, setRecentSearch] = useState<object[]>([]);
+
+    useEffect(() => {
+        let recentData = JSON.parse(localStorage.getItem("recent") ?? "[]");
+        setRecentSearch(recentData ?? [])
+    }, [])
+
+    useLayoutEffect(() => {
+        let token: CancelTokenSource;
+        let getQuery = new URLSearchParams(window.location.search)
+        if (getQuery.has('search')) {
+            let query: string = `${getQuery?.get('search')}`
+            let val = atob(query);
+            let url = `${process.env.REACT_APP_NOMINATIMAPI_SEARCH_URL}?q=${val}&format=json&extratags=1&polygon_geojson=1&limit=1`;
+            token = axios.CancelToken.source();
+            AxiosCall(url, "get", token).then((results) => {
+                setMapData(results[0])
+                addToRecentSearch(results[0])
+            }).catch((err) => {
+                console.log(err)
+            });
+        }
+        else {
+            setMapData(defaultMapData)
+        }
+
+
+        return () => {
+            if (token !== undefined) {
+                token.cancel()
+            }
+        }
+
+    }, [])
+
+
+
+
     const updateMap = (searchresult: object) => {
-        setMapData(searchresult)
+        setMapData(searchresult);
+
+        addToRecentSearch(searchresult)
     }
+
+    const addToRecentSearch = (searchresult: any) => {
+        let recentlist = recentSearch?.filter((l: any) => l?.place_id !== searchresult?.place_id);
+
+        recentlist.splice(0, 0, searchresult)
+        console.log("updateRecentSearch", recentlist);
+
+        localStorage.setItem("recent", JSON.stringify(recentlist))
+        setRecentSearch(recentlist)
+
+    }
+
+
     return <Box className={styles.homebody} >
         <div className={styles.searchbox}>
-            <SearchBarComponent updateMap={updateMap} />
+            <SearchBarComponent updateMap={updateMap} recentSearch={recentSearch} />
         </div>
-        <MapComponent mapData={mapData} />
+        {!isObjectEmpty(mapData) && <MapComponent mapData={mapData} />}
+
     </Box>
 };
 
