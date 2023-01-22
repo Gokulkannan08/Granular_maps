@@ -1,0 +1,55 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html{
+  height: 100%;
+  scroll-behavior: "smooth",
+}
+
+body {
+  margin: 0;
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+#root{
+  height: 100%;
+  display: flex;
+}
+
+@font-face {
+  font-family: "Granular_Bold";
+  src: local("AssistantRegular")url('./font/Inter-Bold.ttf')format("truetype");
+    font-display: swap;
+}
+
+@font-face {
+  font-family: "Granular_Medium";
+  src: local("AssistantRegular")url('./font/Inter-Medium.ttf')format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Granular_Regular";
+  src: local("AssistantRegular")url('./font/Inter-Regular.ttf')format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Granular_Light";
+  src: local("AssistantRegular")url('./font/Inter-Light.ttf')format("truetype");
+  font-display: swap;
+}
+

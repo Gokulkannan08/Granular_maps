@@ -1,0 +1,40 @@
+.inputbase {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.4375em;
+    letter-spacing: 0.00938em;
+    color: rgb(0, 0, 0);
+    box-sizing: border-box;
+    position: relative;
+    cursor: text;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-left: 8px;
+    flex: 1 1 0%;
+
+    &_input {
+        font: inherit;
+        letter-spacing: inherit;
+        color: currentcolor;
+        padding: 4px 0px 5px;
+        border: 0px;
+        box-sizing: content-box;
+        background: none;
+        height: 1.4375em;
+        margin: 0px;
+        -webkit-tap-highlight-color: transparent;
+        display: block;
+        min-width: 0px;
+        width: 100%;
+        outline: none;
+        border: none;
+        animation-name: mui-auto-fill-cancel;
+        animation-duration: 10ms;
+    }
+
+    &_fullwidth {
+        width: 100%;
+    }
+}

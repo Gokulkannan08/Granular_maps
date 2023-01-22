@@ -1,0 +1,62 @@
+@use "../../theme/variables.module.scss" as theme;
+@use "sass:map";
+
+$spacing: theme.$spacing;
+$breakpoints: theme.$breakpoints;
+$justifyContent: theme.$justifyContent;
+$alignItems: theme.$alignItems;
+
+.Grid {
+    &_container {
+        display: flex;
+        flex-wrap: wrap;
+        flex: 1 1 auto;
+        height: 100%;
+    }
+
+    &_item {
+        display: block;
+    }
+
+    @for $i from 1 to 13 {
+        &_xs_#{$i} {
+            flex-basis: calc($i/12) * 100%;
+        }
+    }
+
+    @include theme.breakpoint("sm") {
+        @for $i from 1 to 13 {
+            &_sm_#{$i} {
+                flex-basis: calc($i/12) * 100%;
+            }
+        }
+    }
+
+    @include theme.breakpoint("md") {
+        @for $i from 1 to 13 {
+            &_md_#{$i} {
+                flex-basis: calc($i/12) * 100%;
+            }
+        }
+    }
+
+    @include theme.breakpoint("lg") {
+        @for $i from 1 to 13 {
+            &_lg_#{$i} {
+                flex-basis: calc($i/12) * 100%;
+            }
+        }
+    }
+
+    @each $value in $justifyContent {
+        &_justifyContent_#{$value} {
+            justify-content: $value;
+        }
+    }
+
+    @each $value in $alignItems {
+        &_alignItems_#{$value} {
+            align-items: $value;
+        }
+    }
+}

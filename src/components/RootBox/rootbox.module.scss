@@ -1,0 +1,13 @@
+@use "../../theme/variables.module.scss" as theme;
+@use "sass:map";
+.rbox {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    background: map.get(theme.$palette, "background", "default");
+    padding: map.get(theme.$spacing, "lg");
+
+    &_fullWidth {
+        width: 100%;
+    }
+}
