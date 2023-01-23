@@ -3,19 +3,64 @@
   "name": "Search your destination",
   "icons": [
     {
+      "src": "images/icons/gk16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/gk24.png",
+      "sizes": "24x24",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/gk32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
       "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "64x64",
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
+      "src": "images/icons/gk72.png",
+      "sizes": "72x72",
+      "type": "image/png"
     },
     {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "src": "images/icons/gk96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/gk128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/gk144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/gk152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/gk192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/gk384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/gk512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ],
   "start_url": ".",

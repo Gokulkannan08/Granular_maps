@@ -128,6 +128,7 @@ const SearchBarComponent = (props: { updateMap: any; recentSearch: object[] }) =
                     value={search}
                     onChange={handleChange}
                     placeholder="Search your location"
+                    autoFocus
                     fullWidth />
                 </div>
                 <div style={{ flex: "0 0 auto" }}>

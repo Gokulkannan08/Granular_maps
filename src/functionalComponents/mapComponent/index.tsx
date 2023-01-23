@@ -139,7 +139,7 @@ function LocationMarker(props: any) {
 
           <div style={{ padding: "8px" }}>
             <Button variant='outlined' disabled={isCopied} fullwidth onClick={onCopyBtnClicked} >
-              {isCopied ? "Copied to cilpboard" : "Share"}
+              {isCopied ? "Copied to cilpboard" : "Share link"}
             </Button>
           </div>
         </div>

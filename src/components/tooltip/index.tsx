@@ -10,9 +10,7 @@ interface Props {
 
 const Tooltip: React.FC<Props> = ({ text, position = 'top', children }) => {
     const [showTooltip, setShowTooltip] = useState(false);
-    const className = cn([styles.tooltipContainer, {
-        [styles[`${position}`]]: position,
-    }])
+    const className = cn(styles.tooltipContainer)
     return (
         <div
             className={className}
@@ -20,7 +18,7 @@ const Tooltip: React.FC<Props> = ({ text, position = 'top', children }) => {
             onMouseLeave={() => setShowTooltip(false)}
         >
             {children}
-            {<div className={styles.tooltip}>{text}</div>}
+            {showTooltip && <div className={cn([styles.tooltip, { [styles[`tooltip_${position}`]]: position }])}>{text}</div>}
         </div>
     );
 };
