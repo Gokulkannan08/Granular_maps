@@ -136,7 +136,7 @@ const SearchBarComponent = (props: { updateMap: any; recentSearch: object[] }) =
                     !forPhone ? <>
                       {
                         (buttonloading || search.trim().length === 0) ?
-                          <div className={styles.diasbled} onClick={recentBtnClicked}>
+                          <div className={styles.diasbled}>
                             <BiSearch />
                           </div> :
                           <div className={styles.icon} onClick={onSearchButtonClicked}>
