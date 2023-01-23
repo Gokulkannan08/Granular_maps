@@ -9,7 +9,7 @@ interface PaperProp {
 }
 
 const Paper: React.FC<PaperProp> = ({ children, elavation, style, direction = "row" }) => {
-  const className = cn([styles.paper, { [styles[`paper_elavation${elavation}`]]: elavation, [styles[`paper_${direction}`]]: direction }]);
+  const className = cn([styles.paper, { [styles[`elevation_${elavation}`]]: elavation, [styles[`${direction}`]]: direction }]);
   return (<div className={className} style={style} >
     {children}
   </div>)

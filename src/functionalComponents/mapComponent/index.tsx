@@ -1,14 +1,14 @@
-
-import { MapContainer, TileLayer, useMap, Marker, Popup, Polygon, ZoomControl } from 'react-leaflet';
-
-import "leaflet/dist/leaflet.css";
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Button, Typography } from '../../components';
+import { MapContainer, TileLayer, useMap, Marker, Popup, Polygon, ZoomControl } from 'react-leaflet';
+import styles from "./map.module.scss";
+import "leaflet/dist/leaflet.css";
 import { LatLngTuple } from 'leaflet';
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+import { Button, Typography } from '../../components';
 import { isObjectEmpty } from '../../utlis/helperfunction';
-
+import { RiTeamFill } from 'react-icons/ri';
+import { FaCalendarAlt } from 'react-icons/fa';
 interface MapProps {
   mapData: any
 }
@@ -102,25 +102,48 @@ function LocationMarker(props: any) {
   return position === null ? null : (
     <Marker position={position}>
 
-      <Popup>
-        <div>
+      <Popup >
+
+        {/* <div>
           Address : {mapData?.display_name ?? "Unknown"}
+        </div> */}
+        <div className={styles.cardRoot} >
+          <div className={styles.listItem}>
+            <div className={styles.avaterColored} >
+              <RiTeamFill />
+            </div>
+            <div>
+              <Typography variant='caption'>
+                Population
+              </Typography>
+              <Typography variant='h3' >
+                {mapData?.extratags?.population ?? "Unknown"}
+              </Typography>
+            </div>
+          </div>
+          <hr className={styles.divider} />
+          <div className={styles.listItem}>
+            <div className={styles.avaterColored} >
+              <FaCalendarAlt />
+            </div>
+            <div>
+              <Typography variant='caption'>
+                Census Year
+              </Typography>
+              <Typography variant='h3' >
+                {mapData?.extratags?.[`census:population`] ?? mapData?.extratags?.[`population:date`] ?? "Unknown"}
+              </Typography>
+            </div>
+          </div>
+          <hr className={styles.divider} />
+
+          <div style={{ padding: "8px" }}>
+            <Button variant='outlined' disabled={isCopied} fullwidth onClick={onCopyBtnClicked} >
+              {isCopied ? "Copied to cilpboard" : "Share"}
+            </Button>
+          </div>
         </div>
-        <div>
-          <Typography>
-            Population : {mapData?.extratags?.population ?? "Unknown"}
-          </Typography>
-        </div>
-        <div>
-          <Typography>
-            Census Year : {mapData?.extratags?.[`census:population`] ?? mapData?.extratags?.[`population:date`] ?? "Unknown"}
-          </Typography>
-        </div>
-        <div style={{ padding: "8px" }}>
-          <Button variant='outlined' disabled={isCopied} fullwidth onClick={onCopyBtnClicked} >
-            {isCopied ? "Copied to cilpboard" : "Share"}
-          </Button>
-        </div>
+
 
       </Popup>
     </Marker>

@@ -36,7 +36,6 @@ const AutoComplete: React.FC<AutoComProps> = ({ loading, data, onUpdateMap, icon
                 </Button>
             </div>}
             <div style={{ maxHeight: "350px", overflowY: "auto", flex: 1 }} >
-
                 {
                     data?.length > 0 ?
                         data?.map((item: any) =>
@@ -48,11 +47,9 @@ const AutoComplete: React.FC<AutoComProps> = ({ loading, data, onUpdateMap, icon
                                 icon={icon}
                                 onClick={() => onClick(item)} />
                         ) :
-
-                        <Typography style={{ padding: "16px" }} variant="body1" color="text" >
+                        <Typography style={{ margin: "1rem" }} variant="body1" color="text" >
                             No matching results
                         </Typography>
-
                 }
             </div>
         </>

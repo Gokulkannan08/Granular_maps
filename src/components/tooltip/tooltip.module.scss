@@ -1,0 +1,41 @@
+.tooltipContainer {
+    position: relative;
+    z-index: 3000;
+}
+
+.tooltip {
+    position: absolute;
+    padding: 8px;
+    background-color: rgb(62, 62, 62);
+    color: rgb(255, 255, 255);
+    border-radius: 4px;
+    font-size: 0.6875rem;
+    max-width: 300px;
+    margin: 2px;
+    overflow-wrap: break-word;
+    font-weight: 500;
+
+    &.top {
+        top: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    &.bottom {
+        bottom: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    &.left {
+        top: 50%;
+        left: -30px;
+        transform: translateY(-50%);
+    }
+
+    &.right {
+        top: 50%;
+        right: -30px;
+        transform: translateY(-50%);
+    }
+}

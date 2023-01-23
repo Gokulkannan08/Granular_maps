@@ -1,11 +1,12 @@
 import { useEffect, useLayoutEffect, useState } from "react";
-import { Box, } from "../../components";
-import { MapComponent, SearchBarComponent } from "../../functionalComponents";
-
 import styles from './home.module.scss';
+import { Box } from "../../components";
+import { MapComponent, SearchBarComponent } from "../../functionalComponents";
 import { AxiosCall } from "../../api";
 import axios, { CancelTokenSource } from "axios";
 import { isObjectEmpty } from "../../utlis/helperfunction";
+
+
 const HomeBody = () => {
     const [mapData, setMapData] = useState<object>({});
     const [recentSearch, setRecentSearch] = useState<object[]>([]);
@@ -50,8 +51,10 @@ const HomeBody = () => {
         let recentlist = recentSearch?.filter((l: any) => l?.place_id !== searchresult?.place_id);
 
         recentlist.splice(0, 0, searchresult)
-        console.log("updateRecentSearch", recentlist);
-
+        // console.log("updateRecentSearch", recentlist);
+        if (recentlist?.length > 8) {
+            recentlist.pop();
+        }
         localStorage.setItem("recent", JSON.stringify(recentlist))
         setRecentSearch(recentlist)
 

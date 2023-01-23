@@ -4,3 +4,6 @@ export { default as RootBox } from './RootBox';
 export { default as SearchTextField } from './searchTextField';
 export { default as Button } from './button';
 export { default as Card } from './card';
+export { default as Grid } from './grid';
+export { default as Paper } from './paper';
+export { default as Tooltip } from './tooltip';

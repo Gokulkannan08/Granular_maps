@@ -1,16 +1,13 @@
 import axios, { CancelTokenSource } from "axios";
 import styles from "./searchbar.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AxiosCall } from "../../api";
-import { SearchTextField, Typography } from "../../components"
-import Button from "../../components/button";
-import Grid from "../../components/grid"
-import Paper from "../../components/paper"
+import { Button, Grid, Paper, SearchTextField, Tooltip } from "../../components"
 import AutoComplete from "./autoComplete";
 import { BiTime, BiSearch } from 'react-icons/bi';
-
 import { MdLocationPin } from 'react-icons/md';
-import useMediaQuery from "../../customHooks/mediaQueryHook";
+import { useDebounce, useMediaQuery } from "../../customHooks";
+
 
 const SearchBarComponent = (props: { updateMap: any; recentSearch: object[] }) => {
   const { updateMap, recentSearch } = props;
@@ -21,7 +18,32 @@ const SearchBarComponent = (props: { updateMap: any; recentSearch: object[] }) =
   const [showRecent, setShowRecent] = useState<boolean>(false);
   const [showSuggest, setShowSuggest] = useState<boolean>(false);
   const forPhone = useMediaQuery('(min-width: 600px)')
+  const debounce = useDebounce(search, 300);
   let token: CancelTokenSource;
+
+  useEffect(() => {
+    if (debounce) {
+      setShowRecent(false)
+      setShowSuggest(true)
+      let url = `${process.env.REACT_APP_NOMINATIMAPI_SEARCH_URL}?q=${debounce}&format=json&extratags=1&polygon_geojson=1`;
+      setLoading(true)
+      let token = axios.CancelToken.source();
+      AxiosCall(url, "get", token).then((results) => {
+        let administrativeType = results.filter(isAdministrativeType);
+        // console.log("results", administrativeType)
+        setSuggestion(administrativeType)
+        setLoading(false)
+
+      }).catch((err) => {
+        console.log(err)
+      });
+    }
+
+    return () => {
+
+    }
+  }, [debounce])
+
 
   function isAdministrativeType(item: any, index: number, array: object[]) {
     return (item.type === "administrative");
@@ -30,21 +52,9 @@ const SearchBarComponent = (props: { updateMap: any; recentSearch: object[] }) =
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value
     setValue(value)
-    setShowRecent(false)
-    setShowSuggest(true)
-    let url = `${process.env.REACT_APP_NOMINATIMAPI_SEARCH_URL}?q=${value}&format=json&extratags=1&polygon_geojson=1`;
-    setLoading(true)
-    let token = axios.CancelToken.source();
-    AxiosCall(url, "get", token).then((results) => {
-      let administrativeType = results.filter(isAdministrativeType);
-      // console.log("results", administrativeType)
-      setSuggestion(administrativeType)
-      setLoading(false)
-
-    }).catch((err) => {
-      console.log(err)
-    });
-
+    if (value.trim().length === 0) {
+      setShowSuggest(false)
+    }
 
   }
 
@@ -77,13 +87,12 @@ const SearchBarComponent = (props: { updateMap: any; recentSearch: object[] }) =
     if (token !== undefined) {
       token.cancel()
     }
-    updateMap(obj);
     setValue("")
     setSuggestion([])
     setShowRecent(false)
     setLoading(false)
     setShowSuggest(false)
-
+    updateMap(obj);
   }
 
   const recentBtnClicked = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -106,9 +115,13 @@ const SearchBarComponent = (props: { updateMap: any; recentSearch: object[] }) =
           <Grid item md={8} lg={6} xs={11} >
             <Paper elavation={"1"} style={{ flex: "0 0 auto" }} >
               <>
-                <div className={styles.icon} onClick={recentBtnClicked}>
-                  <BiTime />
-                </div>
+                <Tooltip text="Recent Search" position={"bottom"} >
+                  <div className={styles.icon} onClick={recentBtnClicked}>
+                    <BiTime />
+                  </div>
+                </Tooltip>
+
+
                 <div style={{ flex: "1 1 auto" }}>
                   <SearchTextField
                     type="text"
@@ -196,3 +209,4 @@ const SearchBarComponent = (props: { updateMap: any; recentSearch: object[] }) =
 }
 
 export default SearchBarComponent
+

@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react';
 import PropTypes from "prop-types";
 import cn from "classnames";
-import styles from "./typography.module.scss"
+import styles from "./typography.module.scss";
 
 interface TypographyProps {
   children?: ReactNode;

@@ -5,19 +5,19 @@
     background-color: map.get(theme.$palette, "background", "paper");
     border-radius: map.get(theme.$spacing, "sm");
     padding: map.get(theme.$spacing, "sm");
-    &_row {
+    &.row {
         display: flex;
         align-items: center;
         justify-content: center;
     }
-    &_column {
+    &.column {
         display: flex;
         flex-direction: column;
         justify-items: center;
     }
 
     @each $name, $value in theme.$shawdow {
-        &_elevation_#{$name} {
+        &.elevation_#{$name} {
             box-shadow: $value;
         }
     }
