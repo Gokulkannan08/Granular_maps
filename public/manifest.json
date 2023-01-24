@@ -63,8 +63,8 @@
       "type": "image/png"
     }
   ],
-  "scope": "/",
-  "start_url": "/",
+  "scope": "https://granular-maps.vercel.app",
+  "start_url": "https://granular-maps.vercel.app/",
   "orientation": "portrait-primary",
   "lang": "en-IN",
   "display": "standalone",
