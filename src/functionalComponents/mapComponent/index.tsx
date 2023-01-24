@@ -23,7 +23,7 @@ const MapComponent: React.FC<MapProps> = ({ mapData }) => {
     return value.map((row: any) => [row[1], row[0]])
   }, [])
 
-  const map = useMemo(() => <MapContainer style={{ height: "100%", width: "100%" }} center={[Number(mapData?.lat), Number(mapData?.lon)]} zoom={12} scrollWheelZoom={false} zoomControl={false}>
+  const map = useMemo(() => <MapContainer style={{ height: "100%", width: "100%" }} center={[+mapData?.lat, +mapData?.lon]} zoom={12} scrollWheelZoom={false} zoomControl={false}>
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -66,7 +66,7 @@ function LocationMarker(props: any) {
   useEffect(() => {
     if (!isObjectEmpty(mapData)) {
 
-      let value: LatLngTuple = [Number(mapData?.lat), Number(mapData?.lon)]
+      let value: LatLngTuple = [+mapData?.lat, +mapData?.lon]
       setPosition(value)
       map.flyTo(value, map.getZoom())
     }
